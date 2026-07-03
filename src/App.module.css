@@ -1,0 +1,16 @@
+.screen {
+  max-width: 390px;
+  margin: 0 auto;
+  min-height: 100dvh;
+  background: var(--bg-screen);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.body {
+  flex: 1;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}

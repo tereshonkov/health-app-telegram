@@ -1,0 +1,39 @@
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    padding: 0 4px;
+}
+
+.key {
+    height: 66px;
+    border-radius: 18px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    font-family: var(--font-mono);
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--text-primary);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.1s;
+}
+
+.key:active {
+    opacity: 0.7;
+}
+
+.del {
+    background: rgba(224, 80, 80, 0.1);
+    border-color: rgba(224, 80, 80, 0.22);
+    color: var(--danger);
+    font-size: 20px;
+}
+
+.empty {
+    background: transparent;
+    border-color: transparent;
+    cursor: default;
+}

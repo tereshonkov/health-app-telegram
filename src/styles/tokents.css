@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+/* Тёмная тема (дефолт) */
+:root {
+    /* Фоны */
+    --bg-base: #07080B;
+    --bg-screen: #0B0D11;
+    --bg-card: #15181F;
+    --bg-input: rgba(255, 255, 255, 0.04);
+
+    /* Бордеры */
+    --border: rgba(255, 255, 255, 0.07);
+    --border-medium: rgba(255, 255, 255, 0.09);
+
+    /* Текст */
+    --text-primary: #EDEEF2;
+    --text-secondary: #9AA1AE;
+    --text-muted: #626977;
+
+    /* Акценты — action */
+    --primary: #2C8FCC;
+    --primary-dark: #1A68AB;
+    --primary-shadow: rgba(44, 143, 204, 0.28);
+
+    /* Статусы */
+    --ok: #5FC4A6;
+    --warn: #E3A857;
+    --danger: #E05050;
+
+    /* Health-data */
+    --health: #E8638A;
+
+    /* Шрифты */
+    --font-base: 'Manrope', sans-serif;
+    --font-mono: 'JetBrains Mono', monospace;
+}
+
+/* Светлая тема */
+[data-theme='light'] {
+    --bg-base: #E8E9EC;
+    --bg-screen: #F4F5F8;
+    --bg-card: #ffffff;
+    --bg-input: #F0F1F4;
+
+    --border: rgba(0, 0, 0, 0.07);
+    --border-medium: rgba(0, 0, 0, 0.09);
+
+    --text-primary: #1A1C22;
+    --text-secondary: #6B7280;
+    --text-muted: #9AA1AE;
+}
+
+/* Базовые стили */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+body {
+    font-family: var(--font-base);
+    background: var(--bg-base);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+}
+
+.mono {
+    font-family: var(--font-mono);
+}

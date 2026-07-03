@@ -1,0 +1,118 @@
+.page {
+    padding: 0 16px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.header {
+    padding: 16px 2px 4px;
+}
+
+.title {
+    font-size: 22px;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -0.5px;
+}
+
+.user {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.avatar {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: linear-gradient(145deg, var(--primary), var(--primary-dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 22px;
+    font-weight: 700;
+    color: #fff;
+    flex-shrink: 0;
+    box-shadow: 0 4px 14px var(--primary-shadow);
+}
+
+.info {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.name {
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+.sub {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.stats {
+    display: flex;
+    align-items: center;
+}
+
+.stat {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
+.statNum {
+    font-size: 28px;
+    font-weight: 800;
+    color: var(--text-primary);
+    letter-spacing: -1px;
+}
+
+.statLabel {
+    font-size: 11px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.divider {
+    width: 1px;
+    height: 40px;
+    background: var(--border);
+}
+
+.section {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.sectionTitle {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.sectionSub {
+    font-size: 12px;
+    color: var(--text-secondary);
+}
+
+.danger {
+    width: 100%;
+    height: 48px;
+    border-radius: 14px;
+    border: 1.5px solid rgba(224, 80, 80, 0.3);
+    background: rgba(224, 80, 80, 0.08);
+    color: var(--danger);
+    font-family: var(--font-base);
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 14px;
+}

@@ -1,0 +1,42 @@
+.page {
+    padding: 0 16px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    min-height: 100%;
+    justify-content: space-between;
+}
+
+.greeting {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 2px 4px;
+}
+
+.sub {
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.note {
+    text-align: center;
+    gap: 4px;
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.name {
+    font-size: 18px;
+    font-weight: 800;
+    letter-spacing: -0.8px;
+    color: var(--text-primary);
+    margin-top: 2px;
+}
+
+.actions {
+    display: flex;
+    gap: 10px;
+}
