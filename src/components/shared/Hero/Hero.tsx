@@ -53,7 +53,7 @@ export default function HeroCard({ measure }: Props) {
             textAlign: "center",
           }}
         >
-          ⚠️ Срочно обратитесь к врачу! Ваши показатели критически высокие.
+          ⚠️ Срочно обратитесь к врачу!
         </div>
       )}
 
