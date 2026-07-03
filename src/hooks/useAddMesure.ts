@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { useMeasures } from "@hooks/useMeasures";
+import { hapticFeedback } from "@telegram-apps/sdk-react";
 
 export type Field = "systolic" | "diastolic" | "pulse";
 
@@ -43,6 +44,15 @@ export function useAddMeasure() {
     const p = Number(values.pulse) || 0;
     if (isPulseOnly && !p) return;
     if (!isPulseOnly && (!s || !d || !p)) return;
+
+    try {
+      if (hapticFeedback.isSupported()) {
+        hapticFeedback.notificationOccurred("success");
+      }
+    } catch {
+      // вне Telegram — просто игнорируем
+    }
+
     add({ systolic: s, diastolic: d, pulse: p, note });
     navigate("/");
   }
