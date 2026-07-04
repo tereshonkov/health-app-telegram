@@ -1,4 +1,3 @@
-import { retrieveLaunchParams } from '@telegram-apps/sdk-react'
 import { apiRequest } from './client'
 
 export async function telegramLogin(): Promise<string> {
@@ -7,17 +6,10 @@ export async function telegramLogin(): Promise<string> {
   if (import.meta.env.DEV) {
     initData = 'dev'
   } else {
-    try {
-      const lp = retrieveLaunchParams()
+    initData = window.Telegram?.WebApp?.initData ?? ''
 
-      // initDataRaw порожній в v3 — беремо з window.Telegram напряму
-      initData = window.Telegram?.WebApp?.initData ?? ''
-
-      if (!initData) {
-        throw new Error('Відкрийте додаток через Telegram')
-      }
-    } catch (e) {
-      throw e
+    if (!initData) {
+      throw new Error('Відкрийте додаток через Telegram')
     }
   }
 
