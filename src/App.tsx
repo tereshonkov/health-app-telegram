@@ -1,6 +1,5 @@
 import { useAuth } from '@hooks/useAuth'
 import AppRouter from './router/AppRouter'
-import { useState, useEffect } from 'react'
 
 export default function App() {
   const { isLoading, isError, error } = useAuth()
