@@ -13,9 +13,16 @@ export async function exportPdf(days: 30 | 90): Promise<void> {
 
   const blob = await res.blob()
   const url = URL.createObjectURL(blob)
+
+  // Працює і на iOS і на Android
   const a = document.createElement('a')
   a.href = url
+  a.target = '_blank'
+  a.rel = 'noopener noreferrer'
   a.download = `health-report-${days}d.pdf`
+  document.body.appendChild(a)
   a.click()
-  URL.revokeObjectURL(url)
+  document.body.removeChild(a)
+  
+  setTimeout(() => URL.revokeObjectURL(url), 1000)
 }
