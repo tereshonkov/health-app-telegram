@@ -8,17 +8,17 @@ export async function telegramLogin(): Promise<string> {
     initData = 'dev'
   } else {
     initData = retrieveRawInitData() ?? ''
-
     if (!initData) {
       throw new Error('Відкрийте додаток через Telegram')
     }
   }
 
-  const data = await apiRequest<{ token: string }>('/auth/login', {
+  const data = await apiRequest<{ token: string; user: any }>('/auth/login', {
     method: 'POST',
     body: JSON.stringify({ initData }),
   })
 
   localStorage.setItem('auth_token', data.token)
+  localStorage.setItem('tg_user', JSON.stringify(data.user))
   return data.token
 }

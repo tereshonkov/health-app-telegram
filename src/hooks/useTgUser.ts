@@ -1,12 +1,15 @@
-import { useLaunchParams } from "@telegram-apps/sdk-react";
-
 export function useTgUser() {
-  const lp = useLaunchParams();
-  const user = lp.tgWebAppData?.user;
+  try {
+    const raw = localStorage.getItem('tg_user')
+    if (raw) {
+      const user = JSON.parse(raw)
+      return {
+        firstName: String(user.first_name ?? ''),
+        lastName: String(user.last_name ?? ''),
+        id: user.id ?? null,
+      }
+    }
+  } catch {}
 
-  return {
-    firstName: String(user?.firstName ?? ""),
-    lastName: String(user?.lastName ?? ""),
-    id: user?.id ?? null,
-  };
+  return { firstName: '', lastName: '', id: null }
 }
