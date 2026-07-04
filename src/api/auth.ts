@@ -19,10 +19,10 @@ export async function telegramLogin(): Promise<string> {
   const res = await fetch(`${BASE_URL}/auth/login`, {
     method: 'POST',
     headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
+      'Content-Type': 'application/json',
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
     },
-    body: `initData=${encodeURIComponent(initData)}`,
+    body: JSON.stringify({ initData }),
   })
 
   if (!res.ok) throw new Error(`API error: ${res.status}`)
