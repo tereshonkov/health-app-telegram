@@ -1,9 +1,23 @@
+import { retrieveLaunchParams } from '@telegram-apps/sdk-react'
 import { apiRequest } from './client'
 
 export async function telegramLogin(): Promise<string> {
-  const initData = import.meta.env.DEV
-    ? 'dev'
-    : (window.Telegram?.WebApp?.initData || 'dev')
+  let initData: string
+
+  if (import.meta.env.DEV) {
+    initData = 'dev'
+  } else {
+    try {
+      const lp = retrieveLaunchParams()
+      initData = String(lp.initDataRaw ?? '')
+    } catch {
+      initData = ''
+    }
+
+    if (!initData) {
+      throw new Error('Відкрийте додаток через Telegram')
+    }
+  }
 
   const data = await apiRequest<{ token: string }>('/auth/login', {
     method: 'POST',
