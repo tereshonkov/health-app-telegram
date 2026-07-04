@@ -1,4 +1,4 @@
-import { retrieveLaunchParams } from '@telegram-apps/sdk-react'
+import { retrieveRawInitData } from '@telegram-apps/bridge'
 import { apiRequest } from './client'
 
 export async function telegramLogin(): Promise<string> {
@@ -7,11 +7,10 @@ export async function telegramLogin(): Promise<string> {
   if (import.meta.env.DEV) {
     initData = 'dev'
   } else {
-    try {
-      const lp = retrieveLaunchParams()
-      throw new Error(`raw: "${String(lp.initDataRaw)}" | keys: ${Object.keys(lp).join(',')}`)
-    } catch (e) {
-      throw e
+    initData = retrieveRawInitData() ?? ''
+
+    if (!initData) {
+      throw new Error('Відкрийте додаток через Telegram')
     }
   }
 
