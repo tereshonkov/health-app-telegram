@@ -27,12 +27,17 @@ export default function TrendChart({ measures }: Props) {
     return H - ((val - min) / (max - min)) * (H - 10) - 5;
   }
 
-  const systolicVals = week.map((m) => m.systolic);
-  const diastolicVals = week.map((m) => m.diastolic);
+  // 1. Фільтруємо масиви від null та явно вказуємо TypeScript, що тепер тут тільки number[]
+  const systolicVals = week.map((m) => m.systolic).filter((v): v is number => v !== null);
+  const diastolicVals = week.map((m) => m.diastolic).filter((v): v is number => v !== null);
+  
   const allVals = [...systolicVals, ...diastolicVals];
-  const min = Math.min(...allVals);
-  const max = Math.max(...allVals);
+  
+  // Якщо раптом усі значення виявилися null (масив порожній), задаємо дефолтні межі
+  const min = allVals.length > 0 ? Math.min(...allVals) : 60;
+  const max = allVals.length > 0 ? Math.max(...allVals) : 120;
 
+  // 2. Тепер параметр `vals` має чистий тип number[] і TypeScript задоволений
   function toPoints(vals: number[]) {
     return vals
       .map((v, i) => {
@@ -58,23 +63,28 @@ export default function TrendChart({ measures }: Props) {
         viewBox={`0 0 ${W} ${H}`}
         preserveAspectRatio="none"
       >
-        <polyline
-          points={toPoints(systolicVals)}
-          fill="none"
-          stroke="var(--health)"
-          strokeWidth="2.2"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-        />
-        <polyline
-          points={toPoints(diastolicVals)}
-          fill="none"
-          stroke="var(--ok)"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          opacity="0.8"
-        />
+        {/* Малюємо лінію лише якщо є бодай якісь дані */}
+        {systolicVals.length > 0 && (
+          <polyline
+            points={toPoints(systolicVals)}
+            fill="none"
+            stroke="var(--health)"
+            strokeWidth="2.2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+          />
+        )}
+        {diastolicVals.length > 0 && (
+          <polyline
+            points={toPoints(diastolicVals)}
+            fill="none"
+            stroke="var(--ok)"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            opacity="0.8"
+          />
+        )}
       </svg>
 
       <div className={`${styles.labels} mono`}>
