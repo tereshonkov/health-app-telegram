@@ -1,3 +1,4 @@
+import { retrieveLaunchParams } from '@telegram-apps/sdk-react'
 import { apiRequest } from './client'
 
 export async function telegramLogin(): Promise<string> {
@@ -6,15 +7,11 @@ export async function telegramLogin(): Promise<string> {
   if (import.meta.env.DEV) {
     initData = 'dev'
   } else {
-    // Отримуємо сирий hash без декодування
-    const rawHash = window.location.hash.slice(1)
-    
-    // Знаходимо tgWebAppData без URLSearchParams (щоб не декодувати)
-    const match = rawHash.match(/tgWebAppData=([^&]+)/)
-    initData = match ? match[1] : ''
-
-    if (!initData) {
-      throw new Error('Відкрийте додаток через Telegram')
+    try {
+      const lp = retrieveLaunchParams()
+      throw new Error(`raw: "${String(lp.initDataRaw)}" | keys: ${Object.keys(lp).join(',')}`)
+    } catch (e) {
+      throw e
     }
   }
 
