@@ -9,11 +9,13 @@ export async function telegramLogin(): Promise<string> {
   } else {
     try {
       const lp = retrieveLaunchParams()
-      const raw = String(lp.initDataRaw ?? '')
-      
-      // Тимчасово для дебагу
-      throw new Error(`initDataRaw: "${raw}" | tgWebAppData: ${JSON.stringify(lp.tgWebAppData)}`)
-      
+
+      // initDataRaw порожній в v3 — беремо з window.Telegram напряму
+      initData = window.Telegram?.WebApp?.initData ?? ''
+
+      if (!initData) {
+        throw new Error('Відкрийте додаток через Telegram')
+      }
     } catch (e) {
       throw e
     }
