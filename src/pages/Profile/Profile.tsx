@@ -7,7 +7,7 @@ import styles from "./Profile.module.css";
 
 export default function Profile() {
   const { firstName, lastName } = useTgUser();
-  const { measures } = useMeasures();
+  const { measures, clear } = useMeasures()
   const { reminders } = useReminders();
 
   const fullName = [firstName, lastName].filter(Boolean).join(" ");
@@ -48,9 +48,9 @@ export default function Profile() {
             <span className={`${styles.statNum} mono`}>
               {measures.length > 0
                 ? Math.round(
-                    measures.reduce((a, m) => a + m.pulse, 0) / measures.length,
-                  )
-                : "—"}
+                  measures.reduce((a, m) => a + (m.pulse ?? 0), 0) / measures.length,
+                )
+                : '—'}
             </span>
             <span className={styles.statLabel}>средний пульс</span>
           </div>
@@ -87,10 +87,9 @@ export default function Profile() {
         </div>
         <button
           className={styles.danger}
-          onClick={() => {
-            if (confirm("Удалить все замеры?")) {
-              localStorage.removeItem("health_measures");
-              window.location.reload();
+          onClick={async () => {
+            if (confirm('Удалить все замеры?')) {
+              await clear()
             }
           }}
         >

@@ -1,32 +1,42 @@
-import { useState, useCallback } from "react";
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import {
-  getReminders,
-  addReminder,
-  toggleReminder,
+  fetchReminders,
+  createReminder,
   deleteReminder,
-} from "@store/reminders";
-import type { Reminder } from "@/types";
+  toggleReminder,
+} from '@/api/reminders'
+import type { Reminder } from '@/types'
 
 export function useReminders() {
-  const [reminders, setReminders] = useState<Reminder[]>(() => getReminders());
+  const queryClient = useQueryClient()
 
-  const add = useCallback((data: Omit<Reminder, "id">) => {
-    const r = addReminder(data);
-    setReminders((prev) => [r, ...prev]);
-    return r;
-  }, []);
+  const { data, isLoading } = useQuery({
+    queryKey: ['reminders'],
+    queryFn: fetchReminders,
+  })
 
-  const toggle = useCallback((id: string) => {
-    toggleReminder(id);
-    setReminders((prev) =>
-      prev.map((r) => (r.id === id ? { ...r, enabled: !r.enabled } : r)),
-    );
-  }, []);
+  const reminders: Reminder[] = data?.data ?? []
 
-  const remove = useCallback((id: string) => {
-    deleteReminder(id);
-    setReminders((prev) => prev.filter((r) => r.id !== id));
-  }, []);
+  const addMutation = useMutation({
+    mutationFn: createReminder,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['reminders'] }),
+  })
 
-  return { reminders, add, toggle, remove };
+  const removeMutation = useMutation({
+    mutationFn: deleteReminder,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['reminders'] }),
+  })
+
+  const toggleMutation = useMutation({
+    mutationFn: toggleReminder,
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['reminders'] }),
+  })
+
+  return {
+    reminders,
+    isLoading,
+    add: (data: Omit<Reminder, 'id'>) => addMutation.mutateAsync(data),
+    remove: (id: string) => removeMutation.mutateAsync(id),
+    toggle: (id: string) => toggleMutation.mutateAsync(id),
+  }
 }

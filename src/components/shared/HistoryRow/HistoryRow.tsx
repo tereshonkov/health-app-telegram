@@ -1,5 +1,5 @@
 import Badge from "@components/ui/Badge/Badge";
-import { getMeasureStatus } from "@store/measures";
+import { getMeasureStatus } from '@/utils/measureStatus'
 import type { Measure } from "@/types";
 import styles from "./HistoryRow.module.css";
 

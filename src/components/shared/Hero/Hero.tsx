@@ -2,7 +2,7 @@ import Card from "@/components/ui/Card/Card";
 import Badge from "@/components/ui/Badge/Badge";
 import HeroValues from "./HeroValues";
 import HeroEcg from "./HeroEcg";
-import { getMeasureStatus } from "@store/measures";
+import { getMeasureStatus } from '@/utils/measureStatus'
 import type { Measure } from "@/types";
 import styles from "./Hero.module.css";
 

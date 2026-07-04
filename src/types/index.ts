@@ -2,9 +2,9 @@
 export interface Measure {
   id: string;
   date: string; // ISO string, например '2026-07-03T13:42:00.000Z'
-  systolic: number; // верхнее давление
-  diastolic: number; // нижнее давление
-  pulse: number;
+  systolic: number | null
+  diastolic: number | null
+  pulse: number | null
   note: string; // заметка к замеру (может быть пустой строкой)
 }
 
