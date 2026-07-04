@@ -18,7 +18,7 @@ export default function Home() {
     <div className={styles.page}>
       {/* Приветствие */}
       <div className={styles.greeting}>
-        <div>
+        <div className={styles.greetingContent}>
           <p className={styles.sub}>Добрий день,</p>
           <h1 className={styles.name}>{firstName || "Гость"}</h1>
         </div>
