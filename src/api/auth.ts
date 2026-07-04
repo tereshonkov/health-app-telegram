@@ -6,12 +6,18 @@ export async function telegramLogin(): Promise<string> {
   if (import.meta.env.DEV) {
     initData = 'dev'
   } else {
-    // Спробуємо всі джерела
-    const fromWebApp = window.Telegram?.WebApp?.initData ?? ''
-    const fromHash = window.location.hash.slice(1)
-    const fromSearch = window.location.search.slice(1)
+    // Дані в window.location.hash
+    const hash = window.location.hash.slice(1)
+    const params = new URLSearchParams(hash)
+    initData = params.get('tgWebAppData') ?? ''
 
-    throw new Error(`WebApp: "${fromWebApp}" | hash: "${fromHash}" | search: "${fromSearch}"`)
+    if (initData) {
+      initData = decodeURIComponent(initData)
+    }
+
+    if (!initData) {
+      throw new Error('Відкрийте додаток через Telegram')
+    }
   }
 
   const data = await apiRequest<{ token: string }>('/auth/login', {
