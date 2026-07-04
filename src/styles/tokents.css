@@ -1,5 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap');
 
+/* Прибираємо Android tap highlight */
+* {
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+}
+
+button {
+    -webkit-appearance: none;
+    appearance: none;
+}
+
 /* Тёмная тема (дефолт) */
 :root {
     /* Фоны */
