@@ -4,6 +4,7 @@ import { useReminders } from "@hooks/useReminders";
 import Card from "@components/ui/Card/Card";
 import Button from "@components/ui/Button/Button";
 import styles from "./Profile.module.css";
+import { exportPdf } from "@/api/pdf";
 
 export default function Profile() {
   const { firstName, lastName } = useTgUser();
@@ -73,8 +74,10 @@ export default function Profile() {
             marginTop: 14,
           }}
         >
-          <Button onClick={() => alert('Скоро! Функция в разработке.')}>Скачать PDF за месяц</Button>
-          <Button variant="ghost" onClick={() => alert('Скоро! Функция в разработке.')}>
+          <Button onClick={() => exportPdf(30)}>
+            Скачать PDF за месяц
+          </Button>
+          <Button variant="ghost" onClick={() => exportPdf(90)}>
             Скачать PDF за 3 месяца
           </Button>
         </div>
