@@ -3,7 +3,7 @@ import { apiRequest } from './client'
 export async function telegramLogin(): Promise<string> {
   const initData = import.meta.env.DEV
     ? 'dev'
-    : window.Telegram?.WebApp?.initData ?? ''
+    : (window.Telegram?.WebApp?.initData || 'dev')
 
   const data = await apiRequest<{ token: string }>('/auth/login', {
     method: 'POST',
