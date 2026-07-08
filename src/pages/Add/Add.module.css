@@ -91,3 +91,24 @@
     outline: none;
     line-height: 1.5;
 }
+
+.tabError {
+    color: var(--danger) !important;
+}
+
+.errorDot {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--danger);
+    margin-left: 4px;
+    vertical-align: middle;
+}
+
+.errorMsg {
+    color: var(--danger);
+    font-size: 12px;
+    text-align: center;
+    margin-top: -8px;
+}

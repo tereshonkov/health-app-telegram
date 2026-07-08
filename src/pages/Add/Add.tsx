@@ -10,6 +10,7 @@ export default function Add() {
     active,
     note,
     activeField,
+    errors,
     setActive,
     setNote,
     handleKey,
@@ -39,13 +40,16 @@ export default function Add() {
         {fields.map((f) => (
           <button
             key={f.key}
-            className={`${styles.tab} ${active === f.key ? styles.tabActive : ""}`}
+            className={`${styles.tab} ${active === f.key ? styles.tabActive : ""} ${errors[f.key] ? styles.tabError : ""}`}
             onClick={() => setActive(f.key)}
           >
             {f.label}
+            {errors[f.key] && <span className={styles.errorDot} />}
           </button>
         ))}
       </div>
+
+      {errors[active] && <p className={styles.errorMsg}>{errors[active]}</p>}
 
       <div className={styles.display}>
         <span className={styles.bigNum}>{values[active] || "—"}</span>
