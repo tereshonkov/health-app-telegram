@@ -8,7 +8,7 @@ import { exportPdf } from "@/api/pdf";
 
 export default function Profile() {
   const { firstName, lastName } = useTgUser();
-  const { measures, clear } = useMeasures()
+  const { measures, clear } = useMeasures();
   const { reminders } = useReminders();
 
   const fullName = [firstName, lastName].filter(Boolean).join(" ");
@@ -49,9 +49,10 @@ export default function Profile() {
             <span className={`${styles.statNum} mono`}>
               {measures.length > 0
                 ? Math.round(
-                  measures.reduce((a, m) => a + (m.pulse ?? 0), 0) / measures.length,
-                )
-                : '—'}
+                    measures.reduce((a, m) => a + (m.pulse ?? 0), 0) /
+                      measures.length,
+                  )
+                : "—"}
             </span>
             <span className={styles.statLabel}>средний пульс</span>
           </div>
@@ -74,9 +75,7 @@ export default function Profile() {
             marginTop: 14,
           }}
         >
-          <Button onClick={() => exportPdf(30)}>
-            Скачать PDF за месяц
-          </Button>
+          <Button onClick={() => exportPdf(30)}>Скачать PDF за месяц</Button>
           <Button variant="ghost" onClick={() => exportPdf(90)}>
             Скачать PDF за 3 месяца
           </Button>
@@ -91,13 +90,37 @@ export default function Profile() {
         <button
           className={styles.danger}
           onClick={async () => {
-            if (confirm('Удалить все замеры?')) {
-              await clear()
+            if (confirm("Удалить все замеры?")) {
+              await clear();
             }
           }}
         >
           Удалить все замеры
         </button>
+      </Card>
+
+      {/* Розробник */}
+      <Card>
+        <div className={styles.section}>
+          {/* <span className={styles.sectionTitle}>Розробник</span> */}
+          <span className={styles.sectionSub}>
+            По всем вопросам и предложениям
+          </span>
+        </div>
+
+        <a
+          href="https://t.me/Dmitro90"
+          style={{
+            display: "block",
+            marginTop: 12,
+            color: "var(--primary)",
+            fontSize: 14,
+            fontWeight: 600,
+            textDecoration: "none",
+          }}
+        >
+          @Dmitro90 в Telegram
+        </a>
       </Card>
     </div>
   );
