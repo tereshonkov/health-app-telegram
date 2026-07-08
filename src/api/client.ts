@@ -1,31 +1,40 @@
-const BASE_URL = import.meta.env.VITE_API_URL ?? "http://localhost:8000/api";
+const BASE_URL = import.meta.env.VITE_API_URL ?? 'http://localhost:8000/api'
+
+let isRefreshing = false
 
 export async function apiRequest<T>(
   endpoint: string,
   options: RequestInit = {},
+  _retry = false
 ): Promise<T> {
-  const token = localStorage.getItem("auth_token");
+  const token = localStorage.getItem('auth_token')
 
   const res = await fetch(`${BASE_URL}${endpoint}`, {
     ...options,
     headers: {
-      "Content-Type": "application/json",
+      'Content-Type': 'application/json',
       ...(token ? { Authorization: `Bearer ${token}` } : {}),
       ...options.headers,
     },
-  });
+  })
 
-  // Якщо токен протермінував — очищаємо і перезавантажуємо
-  if (res.status === 401) {
-    localStorage.removeItem("auth_token");
-    localStorage.removeItem("tg_user");
-    // window.location.reload();
-    throw new Error("Unauthorized");
+  // Токен невалідний — робимо новий логін і повторюємо запит один раз
+  if (res.status === 401 && !_retry && !isRefreshing) {
+    isRefreshing = true
+    try {
+      const { telegramLogin } = await import('@/api/auth')
+      await telegramLogin()
+      isRefreshing = false
+      return apiRequest<T>(endpoint, options, true)
+    } catch (e) {
+      isRefreshing = false
+      throw e
+    }
   }
 
   if (!res.ok) {
-    throw new Error(`API error: ${res.status}`);
+    throw new Error(`API error: ${res.status}`)
   }
 
-  return res.json();
+  return res.json()
 }
