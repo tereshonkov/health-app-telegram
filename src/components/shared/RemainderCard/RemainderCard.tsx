@@ -16,7 +16,11 @@ function getNextTime(times: string[]): { time: string; label: string } | null {
     if (diff > 0) {
       if (diff < 60) return { time: t, label: "скоро" };
       const hours = Math.floor(diff / 60);
-      return { time: t, label: `через ${hours} ч` };
+      const mins = diff % 60;
+      return {
+        time: t,
+        label: mins > 0 ? `через ${hours} ч ${mins} хв` : `через ${hours} ч`,
+      };
     }
   }
 
