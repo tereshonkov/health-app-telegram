@@ -1,11 +1,14 @@
-import { useQuery } from '@tanstack/react-query'
-import { telegramLogin } from '@/api/auth'
+import { useQuery } from "@tanstack/react-query";
+import { telegramLogin } from "@/api/auth";
 
 export function useAuth() {
+  const existingToken = localStorage.getItem("auth_token");
+
   return useQuery({
-    queryKey: ['auth'],
+    queryKey: ["auth"],
     queryFn: telegramLogin,
     staleTime: Infinity,
-    retry: 2,
-  })
+    retry: false,
+    enabled: !existingToken,
+  });
 }
