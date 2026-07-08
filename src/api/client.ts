@@ -19,7 +19,7 @@ export async function apiRequest<T>(
   if (res.status === 401) {
     localStorage.removeItem("auth_token");
     localStorage.removeItem("tg_user");
-    window.location.reload();
+    // window.location.reload();
     throw new Error("Unauthorized");
   }
 
