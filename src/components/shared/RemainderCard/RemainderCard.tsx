@@ -2,12 +2,37 @@ import { useReminders } from "@hooks/useReminders";
 import Card from "@components/ui/Card/Card";
 import styles from "./ReminderCard.module.css";
 
+function getNextTime(times: string[]): { time: string; label: string } | null {
+  const now = new Date();
+  const currentMinutes = now.getHours() * 60 + now.getMinutes();
+
+  const sorted = [...times].sort();
+
+  for (const t of sorted) {
+    const [h, m] = t.split(":").map(Number);
+    const timeMinutes = h * 60 + m;
+    const diff = timeMinutes - currentMinutes;
+
+    if (diff > 0) {
+      if (diff < 60) return { time: t, label: "скоро" };
+      const hours = Math.floor(diff / 60);
+      return { time: t, label: `через ${hours} ч` };
+    }
+  }
+
+  // Всі часи сьогодні пройшли — показуємо перший завтра
+  const first = sorted[0];
+  return { time: first, label: "завтра" };
+}
+
 export default function ReminderCard() {
   const { reminders } = useReminders();
 
   const next = reminders.find((r) => r.enabled);
-
   if (!next) return null;
+
+  const nextTime = getNextTime(next.times);
+  if (!nextTime) return null;
 
   return (
     <Card>
@@ -34,9 +59,9 @@ export default function ReminderCard() {
           <span className={styles.name}>
             {next.name} · {next.dose}
           </span>
-          <span className={styles.time}>Сегодня в {next.times[0]}</span>
+          <span className={styles.time}>в {nextTime.time}</span>
         </div>
-        <span className={styles.badge}>скоро</span>
+        <span className={styles.badge}>{nextTime.label}</span>
       </div>
     </Card>
   );

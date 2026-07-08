@@ -1,5 +1,5 @@
 import Badge from "@components/ui/Badge/Badge";
-import { getMeasureStatus } from '@/utils/measureStatus'
+import { getMeasureStatus } from "@/utils/measureStatus";
 import type { Measure } from "@/types";
 import styles from "./HistoryRow.module.css";
 
@@ -29,7 +29,7 @@ export default function HistoryRow({ measure, onDelete }: Props) {
       <div className={styles.meta}>
         <p className={`${styles.date} mono`}>{dateStr}</p>
         <p className={`${styles.date} mono`}>{timeStr}</p>
-        {measure.note && <span className={styles.note}>{measure.note}</span>}
+        {/* {measure.note && <span className={styles.note}>{measure.note}</span>} */}
       </div>
 
       <div className={styles.valuesWrapper}>

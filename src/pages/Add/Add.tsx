@@ -17,6 +17,8 @@ export default function Add() {
     handleSave,
   } = useAddMeasure();
 
+  const hasErrors = Object.values(errors).some((e) => e);
+
   return (
     <div className={styles.page}>
       <div className={styles.header}>
@@ -40,16 +42,13 @@ export default function Add() {
         {fields.map((f) => (
           <button
             key={f.key}
-            className={`${styles.tab} ${active === f.key ? styles.tabActive : ""} ${errors[f.key] ? styles.tabError : ""}`}
+            className={`${styles.tab} ${active === f.key ? styles.tabActive : ""}`}
             onClick={() => setActive(f.key)}
           >
             {f.label}
-            {errors[f.key] && <span className={styles.errorDot} />}
           </button>
         ))}
       </div>
-
-      {errors[active] && <p className={styles.errorMsg}>{errors[active]}</p>}
 
       <div className={styles.display}>
         <span className={styles.bigNum}>{values[active] || "—"}</span>
@@ -66,7 +65,15 @@ export default function Add() {
         rows={2}
       />
 
-      <Button onClick={handleSave}>Сохранить</Button>
+      <Button onClick={handleSave} variant={hasErrors ? "danger" : "primary"}>
+        Сохранить
+      </Button>
+
+      {hasErrors && (
+        <p className={styles.errorMsg}>
+          Введите пульс или давление, чтобы сохранить замер.
+        </p>
+      )}
     </div>
   );
 }

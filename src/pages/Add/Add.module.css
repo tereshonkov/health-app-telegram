@@ -112,3 +112,9 @@
     text-align: center;
     margin-top: -8px;
 }
+
+.danger {
+    background: linear-gradient(155deg, var(--danger), #c03030);
+    color: #fff;
+    box-shadow: 0 8px 24px rgba(224, 80, 80, 0.3);
+}

@@ -2,7 +2,7 @@ import styles from "./Button.module.css";
 import type { ReactNode } from "react";
 
 interface Props {
-  variant?: "primary" | "ghost";
+  variant?: "primary" | "ghost" | "danger";
   children: ReactNode;
   onClick?: () => void;
   fullWidth?: boolean;
