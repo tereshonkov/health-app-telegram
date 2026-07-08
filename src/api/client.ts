@@ -19,18 +19,21 @@ export async function apiRequest<T>(
   })
 
   // Токен невалідний — робимо новий логін і повторюємо запит один раз
-  if (res.status === 401 && !_retry && !isRefreshing) {
-    isRefreshing = true
-    try {
-      const { telegramLogin } = await import('@/api/auth')
-      await telegramLogin()
-      isRefreshing = false
-      return apiRequest<T>(endpoint, options, true)
-    } catch (e) {
-      isRefreshing = false
-      throw e
-    }
+if (res.status === 401 && !_retry && !isRefreshing) {
+  console.error('Got 401, attempting relogin...')
+  isRefreshing = true
+  try {
+    const { telegramLogin } = await import('@/api/auth')
+    await telegramLogin()
+    console.error('Relogin success, retrying...')
+    isRefreshing = false
+    return apiRequest<T>(endpoint, options, true)
+  } catch (e) {
+    console.error('Relogin failed:', e)
+    isRefreshing = false
+    throw e
   }
+}
 
   if (!res.ok) {
     throw new Error(`API error: ${res.status}`)
