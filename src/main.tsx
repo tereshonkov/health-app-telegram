@@ -8,9 +8,9 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 if (import.meta.env.DEV) {
   await import("./mockEnv");
 }
-if (import.meta.env.PROD) {
-  import("eruda").then((eruda) => eruda.default.init());
-}
+// if (import.meta.env.PROD) {
+//   import("eruda").then((eruda) => eruda.default.init());
+// }
 
 init();
 
