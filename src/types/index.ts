@@ -2,9 +2,9 @@
 export interface Measure {
   id: string;
   date: string; // ISO string, например '2026-07-03T13:42:00.000Z'
-  systolic: number | null
-  diastolic: number | null
-  pulse: number | null
+  systolic: number | null;
+  diastolic: number | null;
+  pulse: number | null;
   note: string; // заметка к замеру (может быть пустой строкой)
 }
 
@@ -18,6 +18,9 @@ export interface Reminder {
   dose: string; // дозировка, например '10 мг'
   times: string[];
   enabled: boolean;
+  // эти поля не обязательные, просто для удобства добавил
+  course_days?: number | null; // количество дней курса (если есть)
+  days_left?: number | null; // количество дней, оставшихся до окончания курса
 }
 
 // Профиль пользователя
