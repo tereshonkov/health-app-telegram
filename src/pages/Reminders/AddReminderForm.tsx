@@ -1,55 +1,55 @@
-import { useState } from 'react'
-import type { Reminder } from '@/types'
-import Card from '@components/ui/Card/Card'
-import Button from '@components/ui/Button/Button'
-import styles from './AddRemindersForm.module.css'
+import { useState } from "react";
+import type { Reminder } from "@/types";
+import Card from "@components/ui/Card/Card";
+import Button from "@components/ui/Button/Button";
+import styles from "./AddRemindersForm.module.css";
 
-const UNITS = ['мг', 'мл', 'шт']
+const UNITS = ["мг", "мл", "шт"];
 
 interface Props {
-  onSave: (data: Omit<Reminder, 'id'>) => void
-  onCancel: () => void
+  onSave: (data: Omit<Reminder, "id">) => void;
+  onCancel: () => void;
 }
 
 export default function AddReminderForm({ onSave, onCancel }: Props) {
-  const [name, setName] = useState('')
-  const [dose, setDose] = useState('')
-  const [unit, setUnit] = useState('мг')
-  const [times, setTimes] = useState<string[]>([])
-  const [timeInput, setTimeInput] = useState('')
-  const [courseDays, setCourseDays] = useState('')
+  const [name, setName] = useState("");
+  const [dose, setDose] = useState("");
+  const [unit, setUnit] = useState("мг");
+  const [times, setTimes] = useState<string[]>([]);
+  const [timeInput, setTimeInput] = useState("");
+  const [courseDays, setCourseDays] = useState("");
   const [errors, setErrors] = useState({
     name: false,
     dose: false,
     times: false,
-  })
+  });
 
   function addTime() {
     if (timeInput && !times.includes(timeInput)) {
-      setTimes(prev => [...prev, timeInput].sort())
-      setErrors(prev => ({ ...prev, times: false }))
+      setTimes((prev) => [...prev, timeInput].sort());
+      setErrors((prev) => ({ ...prev, times: false }));
     }
   }
 
   function removeTime(t: string) {
-    setTimes(prev => prev.filter(x => x !== t))
+    setTimes((prev) => prev.filter((x) => x !== t));
   }
 
   function handleSave() {
     const finalTimes =
       timeInput && !times.includes(timeInput)
         ? [...times, timeInput].sort()
-        : times
+        : times;
 
     const newErrors = {
       name: !name,
       dose: !dose,
       times: finalTimes.length === 0 && !timeInput,
-    }
+    };
 
     if (newErrors.name || newErrors.dose || newErrors.times) {
-      setErrors(newErrors)
-      return
+      setErrors(newErrors);
+      return;
     }
 
     onSave({
@@ -58,10 +58,10 @@ export default function AddReminderForm({ onSave, onCancel }: Props) {
       times: finalTimes,
       enabled: true,
       course_days: courseDays ? Number(courseDays) : null,
-    })
+    });
   }
 
-  const hasErrors = errors.name || errors.dose || errors.times
+  const hasErrors = errors.name || errors.dose || errors.times;
 
   return (
     <Card>
@@ -69,12 +69,12 @@ export default function AddReminderForm({ onSave, onCancel }: Props) {
         <div className={styles.row}>
           <span className={styles.label}>НАЗВАНИЕ</span>
           <input
-            className={`${styles.input} ${errors.name ? styles.inputError : ''}`}
+            className={`${styles.input} ${errors.name ? styles.inputError : ""}`}
             placeholder="Например: Лизиноприл"
             value={name}
-            onChange={e => {
-              setName(e.target.value)
-              setErrors(prev => ({ ...prev, name: false }))
+            onChange={(e) => {
+              setName(e.target.value);
+              setErrors((prev) => ({ ...prev, name: false }));
             }}
           />
           {errors.name && <p className={styles.fieldError}>Введите название</p>}
@@ -84,23 +84,25 @@ export default function AddReminderForm({ onSave, onCancel }: Props) {
           <div style={{ flex: 1 }}>
             <span className={styles.label}>ДОЗИРОВКА</span>
             <input
-              className={`${styles.input} ${styles.mono} ${errors.dose ? styles.inputError : ''}`}
+              className={`${styles.input} ${styles.mono} ${errors.dose ? styles.inputError : ""}`}
               placeholder="10"
               value={dose}
-              onChange={e => {
-                setDose(e.target.value)
-                setErrors(prev => ({ ...prev, dose: false }))
+              onChange={(e) => {
+                setDose(e.target.value);
+                setErrors((prev) => ({ ...prev, dose: false }));
               }}
             />
-            {errors.dose && <p className={styles.fieldError}>Введите дозировку</p>}
+            {errors.dose && (
+              <p className={styles.fieldError}>Введите дозировку</p>
+            )}
           </div>
           <div>
             <span className={styles.label}>ЕДИНИЦА</span>
             <div className={styles.units}>
-              {UNITS.map(u => (
+              {UNITS.map((u) => (
                 <button
                   key={u}
-                  className={`${styles.unit} ${unit === u ? styles.unitActive : ''}`}
+                  className={`${styles.unit} ${unit === u ? styles.unitActive : ""}`}
                   onClick={() => setUnit(u)}
                 >
                   {u}
@@ -115,16 +117,16 @@ export default function AddReminderForm({ onSave, onCancel }: Props) {
           <div className={styles.timeAdder}>
             <input
               type="time"
-              className={`${styles.timeInput} ${errors.times ? styles.inputError : ''}`}
+              className={`${styles.timeInput} ${errors.times ? styles.inputError : ""}`}
               value={timeInput}
-              onChange={e => setTimeInput(e.target.value)}
+              onChange={(e) => setTimeInput(e.target.value)}
             />
             <button className={styles.addTime} onClick={addTime}>
               + Добавить
             </button>
           </div>
           <div className={styles.times}>
-            {times.map(t => (
+            {times.map((t) => (
               <button
                 key={t}
                 className={styles.chip}
@@ -148,21 +150,27 @@ export default function AddReminderForm({ onSave, onCancel }: Props) {
               className={`${styles.input} ${styles.mono}`}
               placeholder="—"
               value={courseDays}
-              onChange={e => setCourseDays(e.target.value)}
+              onChange={(e) => setCourseDays(e.target.value)}
               min={1}
               max={365}
+              onFocus={(e) => {
+                setTimeout(() => {
+                  e.target.scrollIntoView({
+                    behavior: "smooth",
+                    block: "center",
+                  });
+                }, 300); // задержка 300мс, пока выезжает клавиатура
+              }}
             />
             <span className={styles.courseLabel}>дней</span>
           </div>
-          <p className={styles.hint}>
-            Бот сообщит когда курс закончится
-          </p>
+          <p className={styles.hint}>Бот сообщит когда курс закончится</p>
         </div>
 
         <div className={styles.btns}>
           <Button
             onClick={handleSave}
-            variant={hasErrors ? 'danger' : 'primary'}
+            variant={hasErrors ? "danger" : "primary"}
           >
             Сохранить
           </Button>
@@ -172,5 +180,5 @@ export default function AddReminderForm({ onSave, onCancel }: Props) {
         </div>
       </div>
     </Card>
-  )
+  );
 }

@@ -24,6 +24,7 @@
   font-family: var(--font-base);
   font-size: 15px;
   outline: none;
+  scroll-margin-bottom: 140px;
 }
 
 .mono {
